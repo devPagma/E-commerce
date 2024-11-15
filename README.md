@@ -107,7 +107,7 @@ The implementation is done in **C**.
   ecommerce.c: Main implementation file containing all the modules and functions.
 
 ## Authors
-  [Amogh Sunil]{https://github.com/devPagma}
+  Amogh Sunil `devPagma`
 
 ## License
   This project is licensed under the MIT License - see the LICENSE file for details.

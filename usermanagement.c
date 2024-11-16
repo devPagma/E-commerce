@@ -11,7 +11,13 @@ typedef struct User{
     char email[50];
     char password[50];
     struct User *next;
+    struct History *history;
 }user;
+
+typedef struct History{
+    int productId;
+    struct History* next;
+}History;
 
 //HASHTABLE STRUCTURE
 typedef struct{
@@ -128,84 +134,84 @@ void logout(user_hashtable *hashTable, user **loggedInUser){
     }
 }
 
-int main(){
-    user_hashtable hashTable;
-    init_user_table(&hashTable);
-    hashTable.login_check=0;
-    user *loggedInUser=NULL;
-    int choice, id;
-    char name[50], email[50], password[50];
+// int main(){
+//     user_hashtable hashTable;
+//     init_user_table(&hashTable);
+//     hashTable.login_check=0;
+//     user *loggedInUser=NULL;
+//     int choice, id;
+//     char name[50], email[50], password[50];
 
-    while (1) {
-        printf("========== User Management System ==========\n");
-        printf("1.Add User\n");
-        printf("2.Login\n");
-        printf("3.Show User Details\n");
-        printf("4.Update User\n");
-        printf("5.Logout\n");
-        printf("6.Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+//     while (1) {
+//         printf("========== User Management System ==========\n");
+//         printf("1.Add User\n");
+//         printf("2.Login\n");
+//         printf("3.Show User Details\n");
+//         printf("4.Update User\n");
+//         printf("5.Logout\n");
+//         printf("6.Exit\n");
+//         printf("Enter your choice: ");
+//         scanf("%d", &choice);
 
-        switch (choice)
-        {
-            case 1:
-                printf("Enter User ID: ");
-                scanf("%d", &id);
-                printf("Enter Name: ");
-                scanf("%s", name);
-                printf("Enter Email: ");
-                scanf("%s", email);
-                printf("Enter Password: ");
-                scanf("%s", password);
-                sign_up(&hashTable, id, name, email, password);
-                break;
+//         switch (choice)
+//         {
+//             case 1:
+//                 printf("Enter User ID: ");
+//                 scanf("%d", &id);
+//                 printf("Enter Name: ");
+//                 scanf("%s", name);
+//                 printf("Enter Email: ");
+//                 scanf("%s", email);
+//                 printf("Enter Password: ");
+//                 scanf("%s", password);
+//                 sign_up(&hashTable, id, name, email, password);
+//                 break;
 
-            case 2:
-                if(hashTable.login_check == 1)
-                {
-                    printf("A user is already logged in. Logout first.\n\n");
-                    break;
-                }
-                printf("Enter User ID: ");
-                scanf("%d", &id);
-                printf("Enter Password: ");
-                scanf("%s", password);
-                loggedInUser=login(&hashTable, id, password);
-                break;
+//             case 2:
+//                 if(hashTable.login_check == 1)
+//                 {
+//                     printf("A user is already logged in. Logout first.\n\n");
+//                     break;
+//                 }
+//                 printf("Enter User ID: ");
+//                 scanf("%d", &id);
+//                 printf("Enter Password: ");
+//                 scanf("%s", password);
+//                 loggedInUser=login(&hashTable, id, password);
+//                 break;
 
-            case 3:
-                printf("Enter User ID to view details: ");
-                scanf("%d", &id);
-                show_user(&hashTable, id);
-                break;
+//             case 3:
+//                 printf("Enter User ID to view details: ");
+//                 scanf("%d", &id);
+//                 show_user(&hashTable, id);
+//                 break;
 
-            case 4:
-                if (hashTable.login_check == 0)
-                {
-                    printf("Please log in to update details.\n\n");
-                    break;
-                }
-                printf("Enter User ID to update: ");
-                scanf("%d", &id);
-                printf("Enter New Name: ");
-                scanf("%s", name);
-                printf("Enter New Email: ");
-                scanf("%s", email);
-                update_user(&hashTable, id, name, email);
-                break;
+//             case 4:
+//                 if (hashTable.login_check == 0)
+//                 {
+//                     printf("Please log in to update details.\n\n");
+//                     break;
+//                 }
+//                 printf("Enter User ID to update: ");
+//                 scanf("%d", &id);
+//                 printf("Enter New Name: ");
+//                 scanf("%s", name);
+//                 printf("Enter New Email: ");
+//                 scanf("%s", email);
+//                 update_user(&hashTable, id, name, email);
+//                 break;
 
-            case 5:
-                logout(&hashTable, &loggedInUser);
-                break;
+//             case 5:
+//                 logout(&hashTable, &loggedInUser);
+//                 break;
 
-            case 6:
-                printf("Exiting the program. Goodbye!\n");
-                return 0;
+//             case 6:
+//                 printf("Exiting the program. Goodbye!\n");
+//                 return 0;
 
-            default:
-                printf("Invalid choice. Please try again.\n\n");
-        }
-    }
-    return 0;
-}
+//             default:
+//                 printf("Invalid choice. Please try again.\n\n");
+//         }
+//     }
+//     return 0;
+// }

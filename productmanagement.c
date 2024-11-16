@@ -106,7 +106,7 @@ void trackHistory(HashTable* hashTable, int userId, int productId) {
     }
 }
 
-// Generate personalized recommendations
+// Generate recommendations based on user history
 void generateRecommendations(HashTable* hashTable, int userId) {
     User* user = getUser(hashTable, userId);
     if (user != NULL) {
@@ -122,28 +122,65 @@ void generateRecommendations(HashTable* hashTable, int userId) {
     }
 }
 
-int main() {
-    HashTable* hashTable = createHashTable();
-
-    addProduct(hashTable, 101, "Laptop", 999.99);
-    addProduct(hashTable, 102, "Smartphone", 499.99);
-    addProduct(hashTable, 103, "Headphones", 79.99);
-    addProduct(hashTable, 104, "Keyboard", 29.99);
-
-    addUser(hashTable, 1, "Alice");
-    addUser(hashTable, 2, "Bob");
-
-    trackHistory(hashTable, 1, 101);
-    trackHistory(hashTable, 1, 103);
-    trackHistory(hashTable, 2, 102);
-    trackHistory(hashTable, 2, 104);
-
-    printf("=== Recommendations ===\n");
-    generateRecommendations(hashTable, 1);
-    printf("\n");
-    generateRecommendations(hashTable, 2);
-
-    freeHashTable(hashTable);
-
-    return 0;
+// Free product list
+void freeProductList(Product* product) {
+    while (product != NULL) {
+        Product* temp = product;
+        product = product->next;
+        free(temp);
+    }
 }
+
+// Free user history
+void freeHistory(History* history) {
+    while (history != NULL) {
+        History* temp = history;
+        history = history->next;
+        free(temp);
+    }
+}
+
+// Free user list
+void freeUserList(User* user) {
+    while (user != NULL) {
+        User* temp = user;
+        freeHistory(user->history);
+        user = user->next;
+        free(temp);
+    }
+}
+
+// Free hash table
+void freeHashTable(HashTable* hashTable) {
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        freeProductList(hashTable->productTable[i]);
+        freeUserList(hashTable->userTable[i]);
+    }
+    free(hashTable);
+}
+
+// int main() {
+//     HashTable* hashTable = createHashTable();
+
+//     addProduct(hashTable, 101, "Laptop", 999.99);
+//     addProduct(hashTable, 102, "Smartphone", 499.99);
+//     addProduct(hashTable, 103, "Headphones", 79.99);
+//     addProduct(hashTable, 104, "Keyboard", 29.99);
+
+//     addUser(hashTable, 1, "Alice");
+//     addUser(hashTable, 2, "Bob");
+
+//     trackHistory(hashTable, 1, 101);
+//     trackHistory(hashTable, 1, 103);
+//     trackHistory(hashTable, 2, 102);
+//     trackHistory(hashTable, 2, 104);
+
+//     printf("=== Recommendations ===\n");
+//     generateRecommendations(hashTable, 1);
+//     printf("\n");
+//     generateRecommendations(hashTable, 2);
+
+//     freeHashTable(hashTable);
+
+//     return 0;
+// }
